@@ -61,7 +61,8 @@ var Game = React.createClass({
         <Hole 
           info={push} 
           key={push.key} 
-          handleChange={this.changeHole}/>
+          handleChange={this.changeHole}
+        />
       );
     }
     return lines;
@@ -71,7 +72,9 @@ var Game = React.createClass({
       <div>
         <button id='addHole' onClick={this.addHole}>Add Hole</button>
         <button id='removeHole' onClick={this.removeHole}>Remove Hole</button>
-        {this.generateHoles()}
+        <div>
+          {this.generateHoles()}
+        </div>
         <Summary info={this.state.data[0]} />
       </div>
     );

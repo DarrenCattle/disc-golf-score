@@ -33,7 +33,7 @@ var generateDefaultHoles = function (n) {
   return result;
 };
 
-var sunnyvale = generateDefaultHoles(9);
+var sunnyvale = generateDefaultHoles(18);
 
 var initial = (
   <Game startData={sunnyvale}/>

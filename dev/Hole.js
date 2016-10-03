@@ -34,13 +34,26 @@ var Hole = React.createClass({
       this.props.handleChange(transform.number,transform);
     }
   },
+  generateStyle: function () {
+    var hole = this.state.info;
+    var holeColor = hole.score > hole.par ? "red" : "green";
+    var style = {
+      display: "inline-block",
+      margin: "1%",
+      backgroundColor: holeColor
+    };
+    return style;
+  },
+  formatSign: function (n) {
+    return n > 0 ? "+" + n : n;
+  },
   render: function () {
     var hole = this.state.info;
     return (
-      <div id={hole.key}>
+      <div id={hole.key} style={this.generateStyle()}>
         <div>----------</div>
         <div>Hole: {hole.number}</div>
-        <div>Score: {hole.score}</div>
+        <div>Score: {this.formatSign(hole.score-hole.par)}</div>
         <div><button onClick={this.addStroke}>Add Stroke</button>
         <button onClick={this.removeStroke}>Remove Stroke</button></div>
         <div>Par: {hole.par}</div>

@@ -60,6 +60,12 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/*Structure
+	Game
+	  Hole
+	  Summary
+	*/
+
 	console.log('init');
 
 	var generateDefaultHoles = function generateDefaultHoles(n) {
@@ -87,7 +93,7 @@
 	  return result;
 	};
 
-	var sunnyvale = generateDefaultHoles(9);
+	var sunnyvale = generateDefaultHoles(18);
 
 	var initial = _react2.default.createElement(_Game2.default, { startData: sunnyvale });
 
@@ -21543,7 +21549,8 @@
 	      lines.push(_react2.default.createElement(_Hole2.default, {
 	        info: push,
 	        key: push.key,
-	        handleChange: this.changeHole }));
+	        handleChange: this.changeHole
+	      }));
 	    }
 	    return lines;
 	  },
@@ -21561,7 +21568,11 @@
 	        { id: "removeHole", onClick: this.removeHole },
 	        "Remove Hole"
 	      ),
-	      this.generateHoles(),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        this.generateHoles()
+	      ),
 	      _react2.default.createElement(_Summary2.default, { info: this.state.data[0] })
 	    );
 	  }
@@ -21617,11 +21628,24 @@
 	      this.props.handleChange(transform.number, transform);
 	    }
 	  },
+	  generateStyle: function generateStyle() {
+	    var hole = this.state.info;
+	    var holeColor = hole.score > hole.par ? "red" : "green";
+	    var style = {
+	      display: "inline-block",
+	      margin: "1%",
+	      backgroundColor: holeColor
+	    };
+	    return style;
+	  },
+	  formatSign: function formatSign(n) {
+	    return n > 0 ? "+" + n : n;
+	  },
 	  render: function render() {
 	    var hole = this.state.info;
 	    return _react2.default.createElement(
 	      "div",
-	      { id: hole.key },
+	      { id: hole.key, style: this.generateStyle() },
 	      _react2.default.createElement(
 	        "div",
 	        null,
@@ -21637,7 +21661,7 @@
 	        "div",
 	        null,
 	        "Score: ",
-	        hole.score
+	        this.formatSign(hole.score - hole.par)
 	      ),
 	      _react2.default.createElement(
 	        "div",
