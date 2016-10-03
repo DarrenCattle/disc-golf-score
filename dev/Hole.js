@@ -1,5 +1,7 @@
 import React from "react";
 
+console.log('imported Hole.js');
+
 var Hole = React.createClass({
   getInitialState: function () {
     return { info: this.props.info };
@@ -49,3 +51,5 @@ var Hole = React.createClass({
     );
   }
 });
+
+module.exports = Hole;

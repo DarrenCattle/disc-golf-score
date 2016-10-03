@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _react = __webpack_require__(1);
 
@@ -54,18 +54,13 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _Game = __webpack_require__(172);
+
+	var _Game2 = _interopRequireDefault(_Game);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	console.log('init');
-
-	var holeLib = {
-	  addPar: function addPar() {
-	    this.setState({ par: this.par + 1 });
-	  },
-	  removePar: function removePar() {
-	    this.setState({ par: this.par - 1 });
-	  }
-	};
 
 	var generateDefaultHoles = function generateDefaultHoles(n) {
 	  var result = [];
@@ -93,248 +88,8 @@
 	};
 
 	var sunnyvale = generateDefaultHoles(9);
-	console.log(sunnyvale);
 
-	var Hole = _react2.default.createClass({
-	  displayName: "Hole",
-
-	  getInitialState: function getInitialState() {
-	    return { info: this.props.info };
-	  },
-	  addStroke: function addStroke() {
-	    var transform = this.state.info;
-	    transform.score += 1;
-	    this.setState({ info: transform });
-	    this.props.handleChange(transform.number, transform);
-	  },
-	  removeStroke: function removeStroke() {
-	    var transform = this.state.info;
-	    if (transform.score > 1) {
-	      transform.score -= 1;
-	      this.setState({ info: transform });
-	      this.props.handleChange(transform.number, transform);
-	    }
-	  },
-	  addPar: function addPar() {
-	    var transform = this.state.info;
-	    transform.par += 1;
-	    this.setState({ info: transform });
-	    this.props.handleChange(transform.number, transform);
-	  },
-	  removePar: function removePar() {
-	    var transform = this.state.info;
-	    if (transform.par > 1) {
-	      transform.par -= 1;
-	      this.setState({ info: transform });
-	      this.props.handleChange(transform.number, transform);
-	    }
-	  },
-	  render: function render() {
-	    var hole = this.state.info;
-	    return _react2.default.createElement(
-	      "div",
-	      { id: hole.key },
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "----------"
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Hole: ",
-	        hole.number
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Score: ",
-	        hole.score
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        _react2.default.createElement(
-	          "button",
-	          { onClick: this.addStroke },
-	          "Add Stroke"
-	        ),
-	        _react2.default.createElement(
-	          "button",
-	          { onClick: this.removeStroke },
-	          "Remove Stroke"
-	        )
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Par: ",
-	        hole.par
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        _react2.default.createElement(
-	          "button",
-	          { onClick: this.addPar },
-	          "Add Par"
-	        ),
-	        _react2.default.createElement(
-	          "button",
-	          { onClick: this.removePar },
-	          "Remove Par"
-	        )
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Distance: ",
-	        hole.distance
-	      )
-	    );
-	  }
-	});
-
-	var Summary = _react2.default.createClass({
-	  displayName: "Summary",
-
-	  render: function render() {
-	    return _react2.default.createElement(
-	      "div",
-	      null,
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "----------"
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Course Name: ",
-	        this.props.info.courseName
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Total Distance: ",
-	        this.props.info.courseLength
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Total Holes: ",
-	        this.props.info.holes
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Strokes for par: ",
-	        this.props.info.coursePar
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Your Strokes: ",
-	        this.props.info.courseScore - this.props.info.coursePar
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Your Score: ",
-	        this.props.info.courseScore
-	      )
-	    );
-	  }
-	});
-
-	var Game = _react2.default.createClass({
-	  displayName: "Game",
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      data: sunnyvale
-	    };
-	  },
-	  addHole: function addHole() {
-	    var transform = this.state.data;
-	    var len = transform.length;
-	    transform.push({
-	      key: "hole_" + len,
-	      number: len,
-	      distance: 300,
-	      par: 3,
-	      score: 3
-	    });
-	    this.setState({ data: transform });
-	    this.updateHoles();
-	  },
-	  removeHole: function removeHole() {
-	    var transform = this.state.data;
-	    if (transform.length > 2) {
-	      transform.pop();
-	      this.setState({ data: transform });
-	      this.updateHoles();
-	    }
-	  },
-	  changeHole: function changeHole(hole, info) {
-	    var transform = this.state.data;
-	    transform[hole] = info;
-	    this.updateHoles();
-	    //console.log(this.state.data);
-	  },
-	  updateHoles: function updateHoles() {
-	    var transform = this.state.data;
-	    var distance = 0,
-	        totalPar = 0,
-	        totalScore = 0,
-	        name = transform[0].courseName;
-	    for (var a = 1; a < transform.length; a++) {
-	      var push = transform[a];
-	      distance += push.distance, totalPar += push.par, totalScore += push.score;
-	    }
-	    transform[0] = {
-	      holes: transform.length - 1,
-	      courseName: name,
-	      courseLength: distance,
-	      coursePar: totalPar,
-	      courseScore: totalScore
-	    };
-	    this.setState({ data: transform });
-	  },
-	  generateHoles: function generateHoles() {
-	    var lines = [];
-	    var transform = this.state.data;
-	    for (var a = 1; a < transform.length; a++) {
-	      var push = transform[a];
-	      lines.push(_react2.default.createElement(Hole, {
-	        info: push,
-	        key: push.key,
-	        handleChange: this.changeHole }));
-	    }
-	    return lines;
-	  },
-	  render: function render() {
-	    console.log(this.state.data);
-	    return _react2.default.createElement(
-	      "div",
-	      null,
-	      _react2.default.createElement(
-	        "button",
-	        { id: "addHole", onClick: this.addHole },
-	        "Add Hole"
-	      ),
-	      _react2.default.createElement(
-	        "button",
-	        { id: "removeHole", onClick: this.removeHole },
-	        "Remove Hole"
-	      ),
-	      this.generateHoles(),
-	      _react2.default.createElement(Summary, { info: this.state.data[0] })
-	    );
-	  }
-	});
-
-	var initial = _react2.default.createElement(Game, null);
+	var initial = _react2.default.createElement(_Game2.default, { startData: sunnyvale });
 
 	_reactDom2.default.render(initial, document.querySelector("#app"));
 
@@ -21704,6 +21459,299 @@
 
 	module.exports = ReactDOMNullInputValuePropHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Hole = __webpack_require__(173);
+
+	var _Hole2 = _interopRequireDefault(_Hole);
+
+	var _Summary = __webpack_require__(174);
+
+	var _Summary2 = _interopRequireDefault(_Summary);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	console.log('imported Game.js');
+
+	var Game = _react2.default.createClass({
+	  displayName: "Game",
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      data: this.props.startData
+	    };
+	  },
+	  addHole: function addHole() {
+	    var transform = this.state.data;
+	    var len = transform.length;
+	    transform.push({
+	      key: "hole_" + len,
+	      number: len,
+	      distance: 300,
+	      par: 3,
+	      score: 3
+	    });
+	    this.setState({ data: transform });
+	    this.updateHoles();
+	  },
+	  removeHole: function removeHole() {
+	    var transform = this.state.data;
+	    if (transform.length > 2) {
+	      transform.pop();
+	      this.setState({ data: transform });
+	      this.updateHoles();
+	    }
+	  },
+	  changeHole: function changeHole(hole, info) {
+	    var transform = this.state.data;
+	    transform[hole] = info;
+	    this.updateHoles();
+	  },
+	  updateHoles: function updateHoles() {
+	    var transform = this.state.data;
+	    var distance = 0,
+	        totalPar = 0,
+	        totalScore = 0,
+	        name = transform[0].courseName;
+	    for (var a = 1; a < transform.length; a++) {
+	      var push = transform[a];
+	      distance += push.distance, totalPar += push.par, totalScore += push.score;
+	    }
+	    transform[0] = {
+	      holes: transform.length - 1,
+	      courseName: name,
+	      courseLength: distance,
+	      coursePar: totalPar,
+	      courseScore: totalScore
+	    };
+	    this.setState({ data: transform });
+	  },
+	  generateHoles: function generateHoles() {
+	    var lines = [];
+	    var transform = this.state.data;
+	    for (var a = 1; a < transform.length; a++) {
+	      var push = transform[a];
+	      lines.push(_react2.default.createElement(_Hole2.default, {
+	        info: push,
+	        key: push.key,
+	        handleChange: this.changeHole }));
+	    }
+	    return lines;
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "div",
+	      null,
+	      _react2.default.createElement(
+	        "button",
+	        { id: "addHole", onClick: this.addHole },
+	        "Add Hole"
+	      ),
+	      _react2.default.createElement(
+	        "button",
+	        { id: "removeHole", onClick: this.removeHole },
+	        "Remove Hole"
+	      ),
+	      this.generateHoles(),
+	      _react2.default.createElement(_Summary2.default, { info: this.state.data[0] })
+	    );
+	  }
+	});
+
+	module.exports = Game;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	console.log('imported Hole.js');
+
+	var Hole = _react2.default.createClass({
+	  displayName: "Hole",
+
+	  getInitialState: function getInitialState() {
+	    return { info: this.props.info };
+	  },
+	  addStroke: function addStroke() {
+	    var transform = this.state.info;
+	    transform.score += 1;
+	    this.setState({ info: transform });
+	    this.props.handleChange(transform.number, transform);
+	  },
+	  removeStroke: function removeStroke() {
+	    var transform = this.state.info;
+	    if (transform.score > 1) {
+	      transform.score -= 1;
+	      this.setState({ info: transform });
+	      this.props.handleChange(transform.number, transform);
+	    }
+	  },
+	  addPar: function addPar() {
+	    var transform = this.state.info;
+	    transform.par += 1;
+	    this.setState({ info: transform });
+	    this.props.handleChange(transform.number, transform);
+	  },
+	  removePar: function removePar() {
+	    var transform = this.state.info;
+	    if (transform.par > 1) {
+	      transform.par -= 1;
+	      this.setState({ info: transform });
+	      this.props.handleChange(transform.number, transform);
+	    }
+	  },
+	  render: function render() {
+	    var hole = this.state.info;
+	    return _react2.default.createElement(
+	      "div",
+	      { id: hole.key },
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "----------"
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "Hole: ",
+	        hole.number
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "Score: ",
+	        hole.score
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "button",
+	          { onClick: this.addStroke },
+	          "Add Stroke"
+	        ),
+	        _react2.default.createElement(
+	          "button",
+	          { onClick: this.removeStroke },
+	          "Remove Stroke"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "Par: ",
+	        hole.par
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "button",
+	          { onClick: this.addPar },
+	          "Add Par"
+	        ),
+	        _react2.default.createElement(
+	          "button",
+	          { onClick: this.removePar },
+	          "Remove Par"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "Distance: ",
+	        hole.distance
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Hole;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	console.log('imported Summary.js');
+
+	var Summary = _react2.default.createClass({
+	  displayName: "Summary",
+
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "div",
+	      null,
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "----------"
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "Course Name: ",
+	        this.props.info.courseName
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "Total Distance: ",
+	        this.props.info.courseLength
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "Total Holes: ",
+	        this.props.info.holes
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "Strokes for par: ",
+	        this.props.info.coursePar
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "Your Strokes: ",
+	        this.props.info.courseScore - this.props.info.coursePar
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        "Your Score: ",
+	        this.props.info.courseScore
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Summary;
 
 /***/ }
 /******/ ]);
