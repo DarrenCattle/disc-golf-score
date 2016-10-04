@@ -21639,7 +21639,7 @@
 	    return style;
 	  },
 	  formatSign: function formatSign(n) {
-	    return n > 0 ? "+" + n : n;
+	    return n > 0 ? "+" + n : n.toString();
 	  },
 	  render: function render() {
 	    var hole = this.state.info;

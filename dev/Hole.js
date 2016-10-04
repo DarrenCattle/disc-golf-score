@@ -45,7 +45,7 @@ var Hole = React.createClass({
     return style;
   },
   formatSign: function (n) {
-    return n > 0 ? "+" + n : n;
+    return n > 0 ? "+" + n : n.toString();
   },
   render: function () {
     var hole = this.state.info;
