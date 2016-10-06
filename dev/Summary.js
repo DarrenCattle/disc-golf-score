@@ -3,7 +3,11 @@ import React from "react";
 console.log('imported Summary.js');
 
 var Summary = React.createClass({
+  formatSign: function (n) {
+    return n > 0 ? "+" + n : n.toString();
+  },
   render: function () {
+    var strokes = this.formatSign(this.props.info.courseScore-this.props.info.coursePar);
     return (
       <div>
         <div>----------</div>
@@ -11,7 +15,7 @@ var Summary = React.createClass({
         <div>Total Distance: {this.props.info.courseLength}</div>
         <div>Total Holes: {this.props.info.holes}</div>
         <div>Strokes for par: {this.props.info.coursePar}</div>
-        <div>Your Strokes: {this.props.info.courseScore-this.props.info.coursePar}</div>
+        <div>Your Strokes: {strokes}</div>
         <div>Your Score: {this.props.info.courseScore}</div>
       </div>
     )

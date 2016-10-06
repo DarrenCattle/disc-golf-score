@@ -21630,10 +21630,22 @@
 	  },
 	  generateStyle: function generateStyle() {
 	    var hole = this.state.info;
-	    var holeColor = hole.score > hole.par ? "red" : "green";
+	    //clrs.cc selection
+	    var colorMap = {
+	      "-2": "#39CCCC",
+	      "-1": "#7FDBFF",
+	      "0": "#01FF70",
+	      "1": "#FFDC00",
+	      "2": "#FF851B",
+	      "3": "#FF4136"
+	    };
+	    var diff = hole.score - hole.par;
+	    var holeColor = diff > 3 ? colorMap[3] : diff < -2 ? colorMap[-2] : colorMap[diff];
 	    var style = {
 	      display: "inline-block",
 	      margin: "1%",
+	      textAlign: "center",
+	      width: "150px",
 	      backgroundColor: holeColor
 	    };
 	    return style;
@@ -21649,59 +21661,51 @@
 	      _react2.default.createElement(
 	        "div",
 	        null,
-	        "----------"
+	        _react2.default.createElement(
+	          "button",
+	          { style: { width: "50%", position: "relative", top: "-2px" }, onClick: this.addStroke },
+	          "+"
+	        ),
+	        _react2.default.createElement(
+	          "button",
+	          { style: { width: "50%", position: "relative", top: "-2px" }, onClick: this.removeStroke },
+	          "-"
+	        )
 	      ),
 	      _react2.default.createElement(
 	        "div",
 	        null,
-	        "Hole: ",
-	        hole.number
+	        "Hole ",
+	        hole.number,
+	        " | ",
+	        hole.distance + ' ft.'
 	      ),
 	      _react2.default.createElement(
 	        "div",
-	        null,
-	        "Score: ",
+	        { style: { "fontSize": "200%", "textAlign": "center" } },
 	        this.formatSign(hole.score - hole.par)
 	      ),
 	      _react2.default.createElement(
 	        "div",
 	        null,
+	        "Par ",
+	        hole.par,
+	        " | Strokes ",
+	        hole.score
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        null,
 	        _react2.default.createElement(
 	          "button",
-	          { onClick: this.addStroke },
-	          "Add Stroke"
+	          { style: { width: "50%" }, onClick: this.addPar },
+	          "+ Par"
 	        ),
 	        _react2.default.createElement(
 	          "button",
-	          { onClick: this.removeStroke },
-	          "Remove Stroke"
+	          { style: { width: "50%" }, onClick: this.removePar },
+	          "- Par"
 	        )
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Par: ",
-	        hole.par
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        _react2.default.createElement(
-	          "button",
-	          { onClick: this.addPar },
-	          "Add Par"
-	        ),
-	        _react2.default.createElement(
-	          "button",
-	          { onClick: this.removePar },
-	          "Remove Par"
-	        )
-	      ),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        "Distance: ",
-	        hole.distance
 	      )
 	    );
 	  }
@@ -21726,7 +21730,11 @@
 	var Summary = _react2.default.createClass({
 	  displayName: "Summary",
 
+	  formatSign: function formatSign(n) {
+	    return n > 0 ? "+" + n : n.toString();
+	  },
 	  render: function render() {
+	    var strokes = this.formatSign(this.props.info.courseScore - this.props.info.coursePar);
 	    return _react2.default.createElement(
 	      "div",
 	      null,
@@ -21763,7 +21771,7 @@
 	        "div",
 	        null,
 	        "Your Strokes: ",
-	        this.props.info.courseScore - this.props.info.coursePar
+	        strokes
 	      ),
 	      _react2.default.createElement(
 	        "div",
