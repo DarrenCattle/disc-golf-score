@@ -1,4 +1,9 @@
-Just a simple free score tracking app.
+Just a simple score tracking app.
+
+```
+npm install
+npm test
+```
 
 ##Technologies
 + React
